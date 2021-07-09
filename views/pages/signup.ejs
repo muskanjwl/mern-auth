@@ -29,7 +29,7 @@
         <label for="address">Address:</label><br>
         <input type="text" id="address" name="address"><br>
         <label for="pincode">Pincode:</label><br>
-        <input type="number" id="pincode" name="pincode"><br>
+        <input type="number" id="pincode" name="pincode" onkeyup="call(this)" ><br>
         <label for="city">City:</label><br>
         <input type="text" id="city" name="city"><br>
         <label for="state">State:</label><br>
@@ -45,3 +45,33 @@
 
 </body>
 </html>
+<script>
+    var api = "https://api.postalpincode.in/pincode/";
+    var cityFeild = document.getElementById("city");
+    var stateFeild = document.getElementById("state");
+    var countryFeild = document.getElementById("country");
+
+    function call(e){
+        if(e.keycode == 13){
+            var apiPin= api + this.value;
+            fetch(apiPin)
+            .then(response => response.json())
+            .then(data =>{
+                if(data.Status=="Success"){
+                    var city=data.PostOffice[0].District;
+                    var state=data.PostOffice[0].State;
+                    var country=data.PostOffice[0].Country;
+                    cityFeild.setAttribute("value",city);
+                    stateFeild.setAttribute("value",state);
+                    countryFeild.setAttribute("value",country);
+                }
+            })
+        }
+ }
+</script>
+<!-- var elem = document.getElementById("wage");
+elem.onkeyup = function(e){
+    if(e.keyCode == 13){
+       validate();
+    }
+} -->

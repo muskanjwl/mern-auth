@@ -50,7 +50,7 @@ router.post("/signup", (req, res) => {
           country:req.body.country,
           // attachment:req.body.attachment,
         });
-  // Hash password before saving in database
+  // Hash password before saving in data base
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;

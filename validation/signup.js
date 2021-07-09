@@ -1,11 +1,11 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-module.exports = function validateRegisterInput(data) {
+module.exports = function validateSignupInput(data) {
   let errors = {};
 // Convert empty fields to an empty string so we can use validator functions
   data.firstname = !isEmpty(data.firstname) ? data.firstname : "";
-  data.middlename = !isEmpty(data.middlename) ? data.middlename : "";
+  // data.middlename = !isEmpty(data.middlename) ? data.middlename : "";
   data.lastname = !isEmpty(data.lastname) ? data.lastname : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
@@ -23,9 +23,6 @@ module.exports = function validateRegisterInput(data) {
 // Name checks
   if (Validator.isEmpty(data.firstname)) {
     errors.firstname = "Name field is required";
-  }
-  if (Validator.isEmpty(data.middlename)) {
-    errors.middlename = "Name field is required";
   }
   if (Validator.isEmpty(data.lastname)) {
     errors.lastname = "Name field is required";
@@ -55,11 +52,11 @@ if (Validator.isEmpty(data.mobile)) {
 }else if(!Validator.isMobilePhone(data.mobile)){
    errors.mobile="Enter a valid Phone Number";
 }
-if(Validator.isEmpty(data.otp)){
-  errors.otp = "OTP is required";
-}else if(!validator.isNumeric(data.otp)){
-  errors.otp="enter valid OTP"
-}
+// if(Validator.isEmpty(data.otp)){
+//   errors.otp = "OTP is required";
+// }else if(!validator.isNumeric(data.otp)){
+//   errors.otp="enter valid OTP"
+// }
 //dob checks
 if (Validator.isEmpty(data.dob)) {
   errors.dob = "Date of Birth is required";

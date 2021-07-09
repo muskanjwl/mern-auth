@@ -10,15 +10,15 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-// router.get('/',(res,req)=>{
-//   res.send("home");
-// });
-// router.get("/signup",(res,req)=>{
-//   res.send("signup page");
-// });
-// router.get("/login",(res,req)=>{
-//   res.send("login page");
-// });
+router.get('/',function(req,res){
+  res.render("pages/home")
+});
+router.get("/signup",function(req,res){
+  res.render("pages/signup")
+});
+router.get("/login",function(req,res){
+  res.render("pages/login")
+});
 
 // @route POST api/users/register
 // @desc Register user
@@ -39,16 +39,16 @@ router.post("/signup", (req, res) => {
           middlename:req.body.middlename,
           lastname:req.body.lastname,
           email: req.body.email,
-          password: req.body.password,
+          // password: req.body.password,
           mobile:req.body.mobile,
           dob:req.body.dob,
           education:req.body.education,
           address:req.body.address,
-          pincode:req.body.mobile,
-          city:req.body.mobile,
-          state:req.body.mobile,
-          country:req.body.mobile,
-          mobile:req.body.mobile,
+          pincode:req.body.pincode,
+          city:req.body.city,
+          state:req.body.state,
+          country:req.body.country,
+          // attachment:req.body.attachment,
         });
   // Hash password before saving in database
         bcrypt.genSalt(10, (err, salt) => {

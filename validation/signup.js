@@ -11,7 +11,6 @@ module.exports = function validateRegisterInput(data) {
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password2 = !isEmpty(data.password2) ? data.password2 : "";
   data.mobile = !isEmpty(data.mobile) ? data.mobile : "";
-  data.otp = !isEmpty(data.otp) ? data.otp : "";
   data.dob = !isEmpty(data.dob) ? data.dob : "";
   data.education = !isEmpty(data.education) ? data.education : "";
   data.address = !isEmpty(data.address) ? data.address : "";

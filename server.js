@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const users = require("./routes/api/users");
 const app = express();
+const methodOverride= require("method-override");
+
 app.set('view engine', 'ejs');
 // Bodyparser middleware
 app.use(
@@ -30,6 +32,8 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 // Routes
+app.use(methodOverride('_method'));
 app.use("/api/users", users);
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));

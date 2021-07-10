@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const checkauth = require("../../check-auth");
+const methodOverride= require("method-override");
 
 // Load input validation
 const validateSignupInput = require("../../validation/signup");
@@ -11,7 +12,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-router.get('/home', checkauth, function(req,res){
+router.get('/home', function(req,res){
   res.render("pages/home")
 });
 router.get("/signup",function(req,res){
@@ -21,8 +22,9 @@ router.get("/login",function(req,res){
   res.render("pages/login")
 });
 router.delete("/logout",function(req,res){
-  req.logIn();
-  req.redirect("/login");
+  console.log("in logout");
+  req.logOut();
+  res.redirect("login");
 });
 
 // @route POST api/users/register

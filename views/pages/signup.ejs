@@ -29,7 +29,7 @@
         <label for="address">Address:</label><br>
         <input type="text" id="address" name="address"><br>
         <label for="pincode">Pincode:</label><br>
-        <input type="number" id="pincode" name="pincode" onkeyup="call(this)" ><br>
+        <input type="text" id="pincode" name="pincode" onchange="call(this)" ><br>
         <label for="city">City:</label><br>
         <input type="text" id="city" name="city"><br>
         <label for="state">State:</label><br>
@@ -52,7 +52,7 @@
     var countryFeild = document.getElementById("country");
 
     function call(e){
-        if(e.keycode == 13){
+        // if(e.keycode == 13){
             var apiPin= api + this.value;
             fetch(apiPin)
             .then(response => response.json())
@@ -66,7 +66,7 @@
                     countryFeild.setAttribute("value",country);
                 }
             })
-        }
+        // }
  }
 </script>
 <!-- var elem = document.getElementById("wage");

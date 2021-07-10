@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const checkauth = require("../../check-auth");
 
 // Load input validation
 const validateSignupInput = require("../../validation/signup");
@@ -10,7 +11,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-router.get('/',function(req,res){
+router.get('/home', checkauth, function(req,res){
   res.render("pages/home")
 });
 router.get("/signup",function(req,res){
@@ -18,6 +19,10 @@ router.get("/signup",function(req,res){
 });
 router.get("/login",function(req,res){
   res.render("pages/login")
+});
+router.delete("/logout",function(req,res){
+  req.logIn();
+  req.redirect("/login");
 });
 
 // @route POST api/users/register
@@ -34,31 +39,39 @@ router.post("/signup", (req, res) => {
       if (user) {
         return res.status(400).json({ email: "Email already exists" });
       } else {
-        const newUser = new User({
-          firstname: req.body.firstname,
-          middlename:req.body.middlename,
-          lastname:req.body.lastname,
-          email: req.body.email,
-          // password: req.body.password,
-          mobile:req.body.mobile,
-          dob:req.body.dob,
-          education:req.body.education,
-          address:req.body.address,
-          pincode:req.body.pincode,
-          city:req.body.city,
-          state:req.body.state,
-          country:req.body.country,
-          // attachment:req.body.attachment,
-        });
+          const newUser = new User({
+            firstname: req.body.firstname,
+            middlename:req.body.middlename,
+            lastname:req.body.lastname,
+            email: req.body.email,
+            password: req.body.password,
+            mobile:req.body.mobile,
+            dob:req.body.dob,
+            education:req.body.education,
+            address:req.body.address,
+            pincode:req.body.pincode,
+            city:req.body.city,
+            state:req.body.state,
+            country:req.body.country,
+            // attachment:req.body.attachment,
+          });
+          res.redirect('login');
+        
   // Hash password before saving in data base
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
-            newUser
+            try{
+              newUser
               .save()
               .then(user => res.json(user))
               .catch(err => console.log(err));
+            }
+            catch(err){
+              console.log(err);
+            }
+           
           });
         });
       }
@@ -100,12 +113,13 @@ router.post("/login", (req, res) => {
               expiresIn: 31556926 // 1 year in seconds
             },
             (err, token) => {
-              res.json({
+              req.json({
                 success: true,
                 token: "Bearer " + token
               });
             }
           );
+          res.redirect('home');
         } else {
           return res
             .status(400)

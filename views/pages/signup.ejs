@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Sign-up Page</h1>
-    <form action='signup' method="POST">
+    <form  id="form" action='signup' method="POST">
         <label for="firstname">First Name:</label><br>
         <input type="text" id="firstname" name="firstname"><br>
         <label for="middlename">Middle Name:</label><br>
@@ -46,24 +46,39 @@
 </body>
 </html>
 <script>
+
+    const form=document.getElementById("form");
+    form.addEventListener('submit', (e)=> e.preventDefault())
+
     var api = "https://api.postalpincode.in/pincode/";
     var cityFeild = document.getElementById("city");
     var stateFeild = document.getElementById("state");
     var countryFeild = document.getElementById("country");
 
-    function call(e){
+    function call(){
+        console.log("onchange activeated")
+        const pin=document.getElementById("pincode");
+        console.log(pin.value)
         // if(e.keycode == 13){
-            var apiPin= api + this.value;
+            var apiPin= api + pin.value;
             fetch(apiPin)
             .then(response => response.json())
             .then(data =>{
-                if(data.Status=="Success"){
-                    var city=data.PostOffice[0].District;
-                    var state=data.PostOffice[0].State;
-                    var country=data.PostOffice[0].Country;
+                if(data[0].Status=="Success"){
+                    var city=data[0].PostOffice[0].District;
+                    var state=data[0].PostOffice[0].State;
+                    var country=data[0].PostOffice[0].Country;
+                    // console.log(city);
+                    // console.log(state);
+                    // console.log(country);
                     cityFeild.setAttribute("value",city);
                     stateFeild.setAttribute("value",state);
                     countryFeild.setAttribute("value",country);
+                }
+                else{
+                    cityFeild.setAttribute("value","");
+                    stateFeild.setAttribute("value","");
+                    countryFeild.setAttribute("value","");
                 }
             })
         // }

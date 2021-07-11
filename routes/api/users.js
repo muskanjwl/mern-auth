@@ -12,7 +12,7 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
-router.get('/home',checkauth, function(req,res){
+router.get('/home',/*checkauth,*/ function(req,res){
   res.render("pages/home")
 });
 router.get("/signup",function(req,res){
